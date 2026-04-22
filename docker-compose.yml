@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "3001:3001"
+
+  api-service:
+    build: ./services/api-service
+    ports:
+      - "3002:3002"
+
+  execution-service:
+    build: ./services/execution-service
+    ports:
+      - "3003:3003"
+
+  analytics-service:
+    build: ./services/analytics-service
+    ports:
+      - "3004:3004"
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
