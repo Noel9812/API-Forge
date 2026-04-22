@@ -1,27 +1,50 @@
-version: "3"
+version: "3.8"
 
 services:
   auth-service:
     build: ./services/auth-service
     ports:
       - "3001:3001"
+    networks:
+      - app-network
+    restart: always
 
   api-service:
     build: ./services/api-service
     ports:
       - "3002:3002"
+    networks:
+      - app-network
+    restart: always
 
   execution-service:
     build: ./services/execution-service
     ports:
       - "3003:3003"
+    networks:
+      - app-network
+    restart: always
 
   analytics-service:
     build: ./services/analytics-service
     ports:
       - "3004:3004"
+    networks:
+      - app-network
+    restart: always
 
   gateway:
     build: ./gateway
     ports:
       - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - auth-service
+      - api-service
+      - execution-service
+      - analytics-service
+    restart: always
+
+networks:
+  app-network:
