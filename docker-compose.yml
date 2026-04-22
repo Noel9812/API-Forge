@@ -7,7 +7,6 @@ services:
       - "3001:3001"
     networks:
       - app-network
-    restart: always
 
   api-service:
     build: ./services/api-service
@@ -15,7 +14,6 @@ services:
       - "3002:3002"
     networks:
       - app-network
-    restart: always
 
   execution-service:
     build: ./services/execution-service
@@ -23,7 +21,6 @@ services:
       - "3003:3003"
     networks:
       - app-network
-    restart: always
 
   analytics-service:
     build: ./services/analytics-service
@@ -31,7 +28,6 @@ services:
       - "3004:3004"
     networks:
       - app-network
-    restart: always
 
   gateway:
     build: ./gateway
@@ -44,7 +40,15 @@ services:
       - api-service
       - execution-service
       - analytics-service
-    restart: always
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    networks:
+      - app-network
+    depends_on:
+      - gateway
 
 networks:
   app-network:
