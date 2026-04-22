@@ -2,8 +2,15 @@
 FROM node:18 AS build
 
 WORKDIR /app
-COPY . .
+
+# Install deps first (better caching + fewer failures)
+COPY package*.json ./
 RUN npm install
+
+# Copy rest of the code
+COPY . .
+
+# Build app
 RUN npm run build
 
 # Serve stage
