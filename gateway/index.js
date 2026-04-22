@@ -1,8 +1,21 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const proxy = require("express-http-proxy");
+const cors = require("cors");
 
 const app = express();
+
+// 🔥 CORS
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+// 🔥 Handle preflight
+app.options("*", cors());
+
+app.use(express.json());
 
 // JWT middleware
 app.use((req, res, next) => {
