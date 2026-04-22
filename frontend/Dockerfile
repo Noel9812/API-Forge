@@ -1,16 +1,13 @@
 # Build stage
-FROM node:18 AS build
+FROM node:20 AS build
 
 WORKDIR /app
 
-# Install deps first (better caching + fewer failures)
 COPY package*.json ./
 RUN npm install
 
-# Copy rest of the code
 COPY . .
 
-# Build app
 RUN npm run build
 
 # Serve stage
